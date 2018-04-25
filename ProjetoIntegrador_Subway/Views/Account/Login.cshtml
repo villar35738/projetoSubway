@@ -7,45 +7,59 @@
 <!-- All the files that are required -->
 <link rel="stylesheet" href="//maxcdn.bootstrapcdn.com/font-awesome/4.3.0/css/font-awesome.min.css">
 <link href='https://fonts.googleapis.com/css?family=Varela+Round' rel='stylesheet' type='text/css'>
+<link href="https://cdn.jsdelivr.net/npm/animate.css@3.5.1" rel="stylesheet" type="text/css">
 <script src="https://cdnjs.cloudflare.com/ajax/libs/jquery-validate/1.13.1/jquery.validate.min.js"></script>
+<script src="https://cdn.jsdelivr.net/npm/vue@2.5.16/dist/vue.js"></script>
+<script src="https://cdnjs.cloudflare.com/ajax/libs/velocity/1.2.3/velocity.min.js"></script>
 <meta name="viewport" content="width=device-width, initial-scale=1, maximum-scale=1" />
-
 @using (Html.BeginForm("Login", "Account", FormMethod.Post))
 {
     @Html.AntiForgeryToken()
     <!-- REGISTRATION FORM -->
     <div class="text-center" style="padding:50px 0; background-color: #dad6d600">
-        <div class="logo">LOGIN</div>
+        <div class="logo" style="color: #009845">LOGIN</div>
         <!-- Main Form -->
         <div class="login-form-1">
             <form id="register-form" class="text-left">
                 <div class="login-form-main-message"></div>
                 <div class="main-login-form">
-                    <div class="login-group">
-                        <div class="form-group" style="border-bottom-color: #cccccc">
+                    <div class="login-group" style="border-radius: 40px !important">
+                        <div class="form-group" style="border-bottom-color: #009845">
                             <label for="Email" class="sr-only">Usuário</label>
                             @Html.Editor("Email", new { htmlAttributes = new { @type = "text", @class = "form-control", @id = "Email", @name = "Email", @placeholder = "Email" } })
-                            @Html.ValidationMessage("Email", new { @class = "text-danger" })
+                            @*@Html.ValidationMessage("Email", new { @class = "text-danger" })*@
                         </div>
                         <div class="form-group">
                             <label for="password" class="sr-only">Senha</label>
                             @Html.Editor("password", new { htmlAttributes = new { @type = "password", @class = "form-control", @id = "password", @name = "password", @placeholder = "Senha" } })
-                            @Html.ValidationMessage("password", new { @class = "text-danger" })
+                            @*@Html.ValidationMessage("password", new { @class = "text-danger" })*@
                         </div>
                     </div>
-                    <button type="submit" class="login-button" style="border-color: #cccccc" id="btnSubmit"><i class="fa fa-chevron-right"></i></button>
+                        <button type="submit" class="login-button" style="border-color: #009845" id="btnSubmit">
+                                <div id="idIcone">
+                                    <i class="fa fa-chevron-right" v-if="show" style="color: #009845"></i>
+                                </div>
+                        </button>
                 </div>
                 <div class="etc-login-form">
-                    <p>Don't have an account? Please open a call to your IT TEAM</p>
-                    <img src="~/Imagens/Subway.png" style="width: 90%; margin-top: 20px;" />
+                    <p>Não possui uma conta? Por favor, entre em contato com nossos atendentes.</p>
+                    @*<img src="~/Imagens/Subway.png" style="width: 70%; margin-top: 20px; margin-right: 10px;" />*@
+                </div>
+                <div class="text-danger" v-show="true">
+                    @Html.ValidationSummary()
                 </div>
             </form>
         </div>
         <!-- end:Main Form -->
     </div>
+
 }
 
 @section Scripts {
     @Scripts.Render("~/bundles/jqueryval")
+
+    <script type="text/javascript">
+
+    </script>
 
 }  

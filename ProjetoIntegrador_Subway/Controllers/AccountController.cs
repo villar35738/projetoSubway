@@ -88,7 +88,7 @@ namespace ProjetoIntegrador_Subway.Controllers
                     return RedirectToAction("SendCode", new { ReturnUrl = returnUrl, RememberMe = model.RememberMe });
                 case SignInStatus.Failure:
                 default:
-                    ModelState.AddModelError("", "Invalid login attempt.");
+                    ModelState.AddModelError("", "E-mail ou senha inválida.");
                     return View(model);
             }
         }
