@@ -1,51 +1,48 @@
 ﻿@model ProjetoIntegrador_Subway.Models.RegisterViewModel
 @{
-                /**/
-
-                ViewBag.Title = "Register";
+    ViewBag.Title = "Cadastro";
 }
 
-<h2>@ViewBag.Title.</h2>
+@*<h2>@ViewBag.Title.</h2>*@
 
 @using (Html.BeginForm("Register", "Account", FormMethod.Post, new { @class = "form-horizontal", role = "form" }))
 {
     @Html.AntiForgeryToken()
-    <h4>Create a new account.</h4>
+    <center><h3>Cadastrar novo funcionário ou cliente</h3></center>
     <hr />
     @Html.ValidationSummary("", new { @class = "text-danger" })
-    <div class="form-group">
-        @Html.LabelFor(m => m.Email, new { @class = "col-md-2 control-label" })
-        <div class="col-md-10">
-            @Html.TextBoxFor(m => m.Email, new { @class = "form-control" })
+    <div class="row">
+        <div class="col-md-6">
+            <div class="form-group">
+                @Html.LabelFor(m => m.Email, new { @class = "col-md-6 control-label" })
+                @Html.TextBoxFor(m => m.Email, new { @class = "form-control" })
+            </div>
+            <div class="form-group">
+                @Html.LabelFor(m => m.Password, new { @class = "col-md-6 control-label" })
+                @Html.PasswordFor(m => m.Password, new { @class = "form-control" })
+            </div>
+            <div class="form-group">
+                @Html.LabelFor(m => m.ConfirmPassword, new { @class = "col-md-6 control-label" })
+                @Html.PasswordFor(m => m.ConfirmPassword, new { @class = "form-control" })
+            </div>
+            <div class="form-group">
+                @Html.Label("Selecione o Tipo de Perfil do Usuário", new { @class = "col-md-6 control-label" })
+                @Html.DropDownList("Name", null, new { @class = "form-control" })
+            </div>
+            <center>
+                <div class="form-group">
+                    <input type="submit" class="btn btn-default" value="Cadastrar" style="margin-left: 88%; width: 29%" />
+                </div>
+            </center>
         </div>
-    </div>
-    <div class="form-group">
-        @Html.LabelFor(m => m.Password, new { @class = "col-md-2 control-label" })
-        <div class="col-md-10">
-            @Html.PasswordFor(m => m.Password, new { @class = "form-control" })
+
+        <div class="col-md-6">
+            <img src="~/Imagens/Subway.png" style="width: 50%; margin-top: 20px; margin-right: 10px; margin-left: 30%" />
         </div>
-    </div>
-    <div class="form-group">
-        @Html.LabelFor(m => m.ConfirmPassword, new { @class = "col-md-2 control-label" })
-        <div class="col-md-10">
-            @Html.PasswordFor(m => m.ConfirmPassword, new { @class = "form-control" })
-        </div>
+
     </div>
 
-    <!--Selecione o Tipo de Perfil para o usuário-->
-    <div class="form-group">
-        @Html.Label("Selecione o Tipo de Perfil do Usuário", new { @class = "col-md-2 control-label" })
-        <div class="col-md-10">
-            @Html.DropDownList("Name")
-        </div>
-    </div>
-    <!--termina aqui-->
 
-    <div class="form-group">
-        <div class="col-md-offset-2 col-md-10">
-            <input type="submit" class="btn btn-default" value="Register" />
-        </div>
-    </div>
 }
 
 @section Scripts {

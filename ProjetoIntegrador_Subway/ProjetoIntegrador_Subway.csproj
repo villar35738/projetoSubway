@@ -210,6 +210,14 @@
     <Content Include="fonts\glyphicons-halflings-regular.svg" />
     <Content Include="Global.asax" />
     <Content Include="Content\Site.css" />
+    <Content Include="Imagens\if_business-work_14_2377634.png" />
+    <Content Include="Imagens\if_Food_C216_2427860.png" />
+    <Content Include="Imagens\slide1.png" />
+    <Content Include="Imagens\slide2.png" />
+    <Content Include="Imagens\slide3.jpg" />
+    <Content Include="Imagens\Subway.png" />
+    <Content Include="Imagens\subway_icon.ico" />
+    <Content Include="Imagens\subway_logo.png" />
     <Content Include="Scripts\bootstrap.js" />
     <Content Include="Scripts\bootstrap.min.js" />
     <Content Include="ApplicationInsights.config">

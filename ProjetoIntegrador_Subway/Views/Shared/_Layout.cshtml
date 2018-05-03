@@ -3,12 +3,16 @@
 <head>
     <meta charset="utf-8" />
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>@ViewBag.Title - My ASP.NET Application</title>
+    <title>@ViewBag.Title | Subway </title>
     @Styles.Render("~/Content/css")
     @Scripts.Render("~/bundles/modernizr")
     <link href="~/Content/MyCss.css" rel="stylesheet" />
+    <link href="~/Content/bootstrap.min.css" rel="stylesheet" />
+    <script src="~/Scripts/bootstrap.min.js"></script>
+    <link rel="icon" href="~/Imagens/subway_logo.png" sizes="192x192" />
 </head>
-<body>
+
+<body style="background-color: rgba(191, 255, 199, 0.51)">
     <div class="navbar navbar-inverse navbar-fixed-top" style="background-color: #009845">
         <div class="container">
             <div class="navbar-header">
@@ -20,12 +24,6 @@
                 @Html.ActionLink("Início", "Index", "Home", new { area = "" }, new { @class = "navbar-brand", @style = "color: white", @id = "idForShadow" })
             </div>
             <div class="navbar-collapse collapse">
-                <ul class="nav navbar-nav">
-                    <li>@Html.ActionLink("Home", "Index", "Home", new { @style = "color: white", @id = "idForShadow" })</li>
-                    <li>@Html.ActionLink("About", "About", "Home", new { @style = "color: white", @id = "idForShadow" })</li>
-                    <li>@Html.ActionLink("Contact", "Contact", "Home", new { @style = "color: white", @id = "idForShadow" })</li>
-                    <li>@Html.ActionLink("Criar Perfil", "Index", "Role", new { @style = "color: white", @id = "idForShadow" })</li>
-                </ul>
                 @Html.Partial("_LoginPartial")
             </div>
         </div>
@@ -34,7 +32,7 @@
         @RenderBody()
         <hr />
         <footer>
-            <p>&copy; @DateTime.Now.Year - My ASP.NET Application</p>
+            <p>&copy; @DateTime.Now.Year - Subway</p>
         </footer>
     </div>
 
