@@ -3,46 +3,76 @@
     ViewBag.Title = "Cadastro";
 }
 
-@*<h2>@ViewBag.Title.</h2>*@
-
 @using (Html.BeginForm("Register", "Account", FormMethod.Post, new { @class = "form-horizontal", role = "form" }))
 {
     @Html.AntiForgeryToken()
-    <center><h3>Cadastrar novo funcionário ou cliente</h3></center>
+    <div class="row">
+        <div class="col-md-6 col-centered">
+            <center><h3>Cadastrar novo funcionário ou cliente</h3></center>
+            @**@
+        </div>
+    </div>
+
     <hr />
     @Html.ValidationSummary("", new { @class = "text-danger" })
     <div class="row">
-        <div class="col-md-6">
+        <div class="col-md-3">
             <div class="form-group">
-                @Html.LabelFor(m => m.Email, new { @class = "col-md-6 control-label" })
-                @Html.TextBoxFor(m => m.Email, new { @class = "form-control" })
+                <center>
+                    <img src="~/Imagens/if_business-work_14_2377634.png" style="width:57%; margin-left: 87px;   " />
+                </center>
             </div>
-            <div class="form-group">
-                @Html.LabelFor(m => m.Password, new { @class = "col-md-6 control-label" })
-                @Html.PasswordFor(m => m.Password, new { @class = "form-control" })
-            </div>
-            <div class="form-group">
-                @Html.LabelFor(m => m.ConfirmPassword, new { @class = "col-md-6 control-label" })
-                @Html.PasswordFor(m => m.ConfirmPassword, new { @class = "form-control" })
-            </div>
-            <div class="form-group">
-                @Html.Label("Selecione o Tipo de Perfil do Usuário", new { @class = "col-md-6 control-label" })
-                @Html.DropDownList("Name", null, new { @class = "form-control" })
-            </div>
-            <center>
-                <div class="form-group">
-                    <input type="submit" class="btn btn-default" value="Cadastrar" style="margin-left: 88%; width: 29%" />
-                </div>
-            </center>
         </div>
+        <div class="col-md-3 col-centered">
+            <div class="form-group">
+                @Html.TextBoxFor(m => m.Email, new { @class = "form-control mBottom", @placeholder = "Email" })
 
-        <div class="col-md-6">
-            <img src="~/Imagens/Subway.png" style="width: 50%; margin-top: 20px; margin-right: 10px; margin-left: 30%" />
+                @Html.PasswordFor(m => m.Password, new { @class = "form-control mBottom", @placeholder = "Senha" })
+
+                @Html.PasswordFor(m => m.ConfirmPassword, new { @class = "form-control mBottom", @placeholder = "Confirmar Senha" })
+
+                @Html.DropDownList("Name", null, new { @class = "form-control mBottom" })
+
+                <center>
+                    <div class="form-group">
+                        <input type="submit" class="btn btn-default" value="Cadastrar" />
+                    </div>
+                </center>
+                @*<table class="table">
+                    <tr>
+                        <th>
+                            @Html.DisplayNameFor(model => model.Email)
+                        </th>
+                        <th>
+                            @Html.DisplayNameFor(model => model.Name)
+                        </th>
+                    </tr>
+                    @{
+                        var users = ViewBag.Users;
+                        var roles = ViewBag.Roles;
+                        foreach (var item in users)
+                        {
+
+                            <tr>
+                                <td>
+                                    @Html.DisplayFor(modelItem => item)
+                                </td>
+                                <td>
+                                    @foreach (var item2 in roles)
+                                    {
+                                        @Html.DisplayFor(modelItem2 => item2)
+                                    }
+
+                                </td>
+                            </tr>
+
+                        }
+                    }
+                </table>*@
+            </div>
+            @*<img src="~/Imagens/Subway.png" style="width: 50%; margin-top: 20px; margin-right: 10px; margin-left: 30%" />*@
         </div>
-
     </div>
-
-
 }
 
 @section Scripts {

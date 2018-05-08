@@ -9,7 +9,7 @@ namespace ProjetoIntegrador_Subway.Controllers
 {
     public class HomeController : Controller
     {
-        
+        [Authorize(Roles = "Gerente, Estoquista, Cliente, Caixa")]
         public ActionResult Index()
         {
             return View();

@@ -1,10 +1,12 @@
 ﻿using System;
+using System.Collections.Generic;
 using System.Globalization;
 using System.Linq;
 using System.Security.Claims;
 using System.Threading.Tasks;
 using System.Web;
 using System.Web.Mvc;
+using System.Web.Security;
 using Microsoft.AspNet.Identity;
 using Microsoft.AspNet.Identity.Owin;
 using Microsoft.Owin.Security;
@@ -24,7 +26,7 @@ namespace ProjetoIntegrador_Subway.Controllers
             context = new ApplicationDbContext();
         }
 
-        public AccountController(ApplicationUserManager userManager, ApplicationSignInManager signInManager )
+        public AccountController(ApplicationUserManager userManager, ApplicationSignInManager signInManager)
         {
             UserManager = userManager;
             SignInManager = signInManager;
@@ -36,9 +38,9 @@ namespace ProjetoIntegrador_Subway.Controllers
             {
                 return _signInManager ?? HttpContext.GetOwinContext().Get<ApplicationSignInManager>();
             }
-            private set 
-            { 
-                _signInManager = value; 
+            private set
+            {
+                _signInManager = value;
             }
         }
 
@@ -122,7 +124,7 @@ namespace ProjetoIntegrador_Subway.Controllers
             // If a user enters incorrect codes for a specified amount of time then the user account 
             // will be locked out for a specified amount of time. 
             // You can configure the account lockout settings in IdentityConfig
-            var result = await SignInManager.TwoFactorSignInAsync(model.Provider, model.Code, isPersistent:  model.RememberMe, rememberBrowser: model.RememberBrowser);
+            var result = await SignInManager.TwoFactorSignInAsync(model.Provider, model.Code, isPersistent: model.RememberMe, rememberBrowser: model.RememberBrowser);
             switch (result)
             {
                 case SignInStatus.Success:
@@ -138,22 +140,43 @@ namespace ProjetoIntegrador_Subway.Controllers
 
         //
         // GET: /Account/Register
-        [AllowAnonymous]
+        //[AllowAnonymous]
         [Authorize(Roles = "Gerente")]
         public ActionResult Register()
         {
+            using (var context = new ApplicationDbContext())
+            {
+                var userId = context.Users.Select(u => new { u.UserName, u.Roles.FirstOrDefault().RoleId }).ToList();
+                Dictionary<object,object> obj = new Dictionary<object,object>();
+
+                foreach (var teste in userId)
+                {
+                    var result = from role in context.Roles
+                            where role.Id == teste.RoleId
+                            from user in role.Users
+                            select new { teste.UserName, role.Name };
+
+                    obj.Add(result.FirstOrDefault().UserName, result.FirstOrDefault().Name);
+                }
+
+                //var roleId = context.Roles.Where(s => s.Id.Contains(userId))
+                ViewBag.Users = context.Users.Select(u => u.UserName).ToList();
+                //ViewBag.Roles = context.Roles.Select(n => n.Name.Where(u => userId.Equals(Convert.ToString(roleId.Where(e => !roleId.Equals(""))))).ToList());
+            }
             ViewBag.Name = new SelectList(context.Roles.ToList(), "Name", "Name");
             return View();
+
         }
 
         //
         // POST: /Account/Register
         [HttpPost]
-        [AllowAnonymous]
+        //[AllowAnonymous]
         [ValidateAntiForgeryToken]
         [Authorize(Roles = "Gerente")]
         public async Task<ActionResult> Register(RegisterViewModel model)
         {
+
             if (ModelState.IsValid)
             {
                 var user = new ApplicationUser { UserName = model.Email, Email = model.Email };
@@ -164,8 +187,8 @@ namespace ProjetoIntegrador_Subway.Controllers
                     await this.UserManager.AddToRoleAsync(user.Id, model.Name);
                     //termina aqui
 
-                    await SignInManager.SignInAsync(user, isPersistent:false, rememberBrowser:false);
-                    
+                    await SignInManager.SignInAsync(user, isPersistent: false, rememberBrowser: false);
+
                     // For more information on how to enable account confirmation and password reset please visit https://go.microsoft.com/fwlink/?LinkID=320771
                     // Send an email with this link
                     // string code = await UserManager.GenerateEmailConfirmationTokenAsync(user.Id);

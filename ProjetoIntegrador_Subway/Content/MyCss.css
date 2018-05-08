@@ -16,3 +16,12 @@
 .img-slide{
     width: 100%;
 }
+
+.col-centered {
+    float: none;
+    margin: 0 auto;
+}
+
+.mBottom{
+    margin-bottom: 10px;
+}
