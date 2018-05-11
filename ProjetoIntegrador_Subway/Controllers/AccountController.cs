@@ -158,14 +158,10 @@ namespace ProjetoIntegrador_Subway.Controllers
 
                     obj.Add(result.FirstOrDefault().UserName, result.FirstOrDefault().Name);
                 }
-
-                //var roleId = context.Roles.Where(s => s.Id.Contains(userId))
-                ViewBag.Users = context.Users.Select(u => u.UserName).ToList();
-                //ViewBag.Roles = context.Roles.Select(n => n.Name.Where(u => userId.Equals(Convert.ToString(roleId.Where(e => !roleId.Equals(""))))).ToList());
+                ViewBag.Users = obj;
             }
             ViewBag.Name = new SelectList(context.Roles.ToList(), "Name", "Name");
             return View();
-
         }
 
         //
@@ -187,7 +183,7 @@ namespace ProjetoIntegrador_Subway.Controllers
                     await this.UserManager.AddToRoleAsync(user.Id, model.Name);
                     //termina aqui
 
-                    await SignInManager.SignInAsync(user, isPersistent: false, rememberBrowser: false);
+                    //await SignInManager.SignInAsync(user, isPersistent: false, rememberBrowser: false);
 
                     // For more information on how to enable account confirmation and password reset please visit https://go.microsoft.com/fwlink/?LinkID=320771
                     // Send an email with this link
@@ -195,11 +191,10 @@ namespace ProjetoIntegrador_Subway.Controllers
                     // var callbackUrl = Url.Action("ConfirmEmail", "Account", new { userId = user.Id, code = code }, protocol: Request.Url.Scheme);
                     // await UserManager.SendEmailAsync(user.Id, "Confirm your account", "Please confirm your account by clicking <a href=\"" + callbackUrl + "\">here</a>");
 
-                    return RedirectToAction("Index", "Home");
+                    return RedirectToAction("Register", "Account");
                 }
                 AddErrors(result);
             }
-
             // If we got this far, something failed, redisplay form
             return View(model);
         }
