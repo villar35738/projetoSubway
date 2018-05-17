@@ -210,8 +210,13 @@
     <Content Include="fonts\glyphicons-halflings-regular.svg" />
     <Content Include="Global.asax" />
     <Content Include="Content\Site.css" />
+    <Content Include="Imagens\cardapio.png" />
     <Content Include="Imagens\if_business-work_14_2377634.png" />
     <Content Include="Imagens\if_Food_C216_2427860.png" />
+    <Content Include="Imagens\monteLanche.png" />
+    <Content Include="Imagens\pedidoFechado.png" />
+    <Content Include="Imagens\pedidoPago.png" />
+    <Content Include="Imagens\pedidos.png" />
     <Content Include="Imagens\slide1.png" />
     <Content Include="Imagens\slide2.png" />
     <Content Include="Imagens\slide3.jpg" />
