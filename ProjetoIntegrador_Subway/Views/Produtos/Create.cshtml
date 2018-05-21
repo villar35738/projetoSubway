@@ -1,0 +1,132 @@
+﻿@model IEnumerable<ProjetoIntegrador_Subway.Models.Produto>
+
+@{
+    ViewBag.Title = "Create";
+    Layout = "~/Views/Shared/_Layout.cshtml";
+}
+
+@using (Html.BeginForm())
+{
+    @Html.AntiForgeryToken()
+    <div class="row">
+        <div class="col-md-6 col-centered">
+            <center><h3>Cadastrar novo produto</h3></center>
+        </div>
+    </div>
+
+    <hr />
+    @Html.ValidationSummary("", new { @class = "text-danger" })
+    <div class="row">
+        <div class="col-md-3">
+            <div class="form-group">
+                <center>
+                    <img src="~/Imagens/if_Food_C216_2427860.png" style="width:57%; margin-left: 87px;   " />
+                </center>
+            </div>
+        </div>
+        <div class="col-md-3 col-centered">
+            <div class="form-group">
+                @Html.EditorFor(model => model.FirstOrDefault().nomeProduto, new { htmlAttributes = new { @class = "form-control", @placeholder = "Nome do produto" } })
+                @Html.ValidationMessageFor(model => model.FirstOrDefault().nomeProduto, "", new { @class = "text-danger" })
+
+                @Html.EditorFor(model => model.FirstOrDefault().valorProduto, new { htmlAttributes = new { @class = "form-control", @placeholder = "Valor do produto" } })
+                @Html.ValidationMessageFor(model => model.FirstOrDefault().valorProduto, "", new { @class = "text-danger" })
+
+                @Html.EditorFor(model => model.FirstOrDefault().limitePorLanche, new { htmlAttributes = new { @class = "form-control", @placeholder = "Limite por lanche" } })
+                @Html.ValidationMessageFor(model => model.FirstOrDefault().limitePorLanche, "", new { @class = "text-danger" })
+
+                <select class="form-control">
+
+                    @{
+                        foreach (var item in ViewBag.CategoriaP)
+                        {
+                            <option>@item</option>
+                        }
+                    }
+                </select>
+
+                <center>
+                    <div class="form-group" style="margin-top: 10px">
+                        <input type="submit" value="Create" class="btn btn-default" />
+                    </div>
+                </center>
+
+            </div>
+            @*<img src="~/Imagens/Subway.png" style="width: 50%; margin-top: 20px; margin-right: 10px; margin-left: 30%" />*@
+        </div>
+        <hr />
+        <table class="table">
+            <tr>
+                <th>
+                    @Html.DisplayNameFor(model => model.nomeProduto)
+                </th>
+                <th>
+                    @Html.DisplayNameFor(model => model.valorProduto)
+                </th>
+                <th>
+                    @Html.DisplayNameFor(model => model.limitePorLanche)
+                </th>
+                <th>
+                    @Html.DisplayNameFor(model => model.tipoProduto)
+                </th>
+                <th>
+                    @Html.DisplayNameFor(model => model.qtdEstoque)
+                </th>
+                <th></th>
+            </tr>
+
+            @foreach (var item in Model)
+            {
+                <tr>
+                    <td>
+                        @Html.DisplayFor(modelItem => item.nomeProduto)
+                    </td>
+                    <td>
+                        @Html.DisplayFor(modelItem => item.valorProduto)
+                    </td>
+                    <td>
+                        @Html.DisplayFor(modelItem => item.limitePorLanche)
+                    </td>
+                    <td>
+                        @Html.DisplayFor(modelItem => item.tipoProduto)
+                    </td>
+                    <td>
+                        @Html.DisplayFor(modelItem => item.qtdEstoque)
+                    </td>
+                </tr>
+            }
+
+        </table>
+
+        @*<table class="table table-hover table-bordered" style="background-color: white !important">
+                <tr>
+                    <th>
+                        <center>
+                            @Html.DisplayNameFor(model => model.Email)
+                        </center>
+                    </th>
+                    <th>
+                        <center>
+                            @Html.DisplayNameFor(model => model.Name)
+                        </center>
+                    </th>
+                </tr>
+                @{
+                    Dictionary<object, object> lista = (Dictionary<object, object>)ViewBag.Users;
+                    foreach (var item in lista)
+                    {
+
+                        <tr>
+                            <td>
+                                @Html.DisplayFor(modelItem => item.Key)
+                            </td>
+                            <td>
+                                @Html.DisplayFor(modelItem => item.Value)
+                            </td>
+                        </tr>
+
+                    }
+                }
+            </table>*@
+    </div>
+}

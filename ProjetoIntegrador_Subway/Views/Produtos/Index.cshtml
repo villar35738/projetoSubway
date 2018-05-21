@@ -1,0 +1,58 @@
+﻿@model IEnumerable<ProjetoIntegrador_Subway.Models.Produto>
+
+@{
+    ViewBag.Title = "Index";
+    Layout = "~/Views/Shared/_Layout.cshtml";
+}
+
+<h2>Index</h2>
+
+<p>
+    @Html.ActionLink("Create New", "Create")
+</p>
+<table class="table">
+    <tr>
+        <th>
+            @Html.DisplayNameFor(model => model.nomeProduto)
+        </th>
+        <th>
+            @Html.DisplayNameFor(model => model.valorProduto)
+        </th>
+        <th>
+            @Html.DisplayNameFor(model => model.limitePorLanche)
+        </th>
+        <th>
+            @Html.DisplayNameFor(model => model.tipoProduto)
+        </th>
+        <th>
+            @Html.DisplayNameFor(model => model.qtdEstoque)
+        </th>
+        <th></th>
+    </tr>
+
+@foreach (var item in Model) {
+    <tr>
+        <td>
+            @Html.DisplayFor(modelItem => item.nomeProduto)
+        </td>
+        <td>
+            @Html.DisplayFor(modelItem => item.valorProduto)
+        </td>
+        <td>
+            @Html.DisplayFor(modelItem => item.limitePorLanche)
+        </td>
+        <td>
+            @Html.DisplayFor(modelItem => item.tipoProduto)
+        </td>
+        <td>
+            @Html.DisplayFor(modelItem => item.qtdEstoque)
+        </td>
+        <td>
+            @Html.ActionLink("Edit", "Edit", new { id=item.ID }) |
+            @Html.ActionLink("Details", "Details", new { id=item.ID }) |
+            @Html.ActionLink("Delete", "Delete", new { id=item.ID })
+        </td>
+    </tr>
+}
+
+</table>

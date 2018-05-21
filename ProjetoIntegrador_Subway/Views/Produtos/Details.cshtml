@@ -1,0 +1,59 @@
+﻿@model ProjetoIntegrador_Subway.Models.Produto
+
+@{
+    ViewBag.Title = "Details";
+    Layout = "~/Views/Shared/_Layout.cshtml";
+}
+
+<h2>Details</h2>
+
+<div>
+    <h4>Produto</h4>
+    <hr />
+    <dl class="dl-horizontal">
+        <dt>
+            @Html.DisplayNameFor(model => model.nomeProduto)
+        </dt>
+
+        <dd>
+            @Html.DisplayFor(model => model.nomeProduto)
+        </dd>
+
+        <dt>
+            @Html.DisplayNameFor(model => model.valorProduto)
+        </dt>
+
+        <dd>
+            @Html.DisplayFor(model => model.valorProduto)
+        </dd>
+
+        <dt>
+            @Html.DisplayNameFor(model => model.limitePorLanche)
+        </dt>
+
+        <dd>
+            @Html.DisplayFor(model => model.limitePorLanche)
+        </dd>
+
+        <dt>
+            @Html.DisplayNameFor(model => model.tipoProduto)
+        </dt>
+
+        <dd>
+            @Html.DisplayFor(model => model.tipoProduto)
+        </dd>
+
+        <dt>
+            @Html.DisplayNameFor(model => model.qtdEstoque)
+        </dt>
+
+        <dd>
+            @Html.DisplayFor(model => model.qtdEstoque)
+        </dd>
+
+    </dl>
+</div>
+<p>
+    @Html.ActionLink("Edit", "Edit", new { id = Model.ID }) |
+    @Html.ActionLink("Back to List", "Index")
+</p>
