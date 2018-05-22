@@ -8,6 +8,8 @@ namespace ProjetoIntegrador_Subway.Models
 {
     public class Produto
     {
+        public Produto() { }
+        
         public int ID { get; set; }
 
         [Required]

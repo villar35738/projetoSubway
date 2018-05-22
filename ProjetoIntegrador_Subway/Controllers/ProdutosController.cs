@@ -39,8 +39,11 @@ namespace ProjetoIntegrador_Subway.Controllers
         public ActionResult Create()
         {
             ViewBag.CategoriaP = db.CategoriaProdutos.Select(w => w.nomeCategoria).ToList();
-            ViewBag.Produtos = db.Produtos.ToList();
-            return View();
+            var produtosList = db.Produtos.ToList();
+
+            Tuple<Produto, IEnumerable<Produto>> lista = new Tuple<Produto, IEnumerable<Produto>>(null, produtosList);
+
+            return View(lista);
         }
 
         // POST: Produtos/Create
@@ -48,16 +51,13 @@ namespace ProjetoIntegrador_Subway.Controllers
         // more details see https://go.microsoft.com/fwlink/?LinkId=317598.
         [HttpPost]
         [ValidateAntiForgeryToken]
-        public ActionResult Create([Bind(Include = "ID,nomeProduto,valorProduto,limitePorLanche,tipoProduto")] Produto produto)
+        public ActionResult Create(Produto Item1, List<Produto> Item2, string tipoProduto)
+        //public ActionResult Create([Bind(Include = "ID,nomeProduto,valorProduto,limitePorLanche,tipoProduto")] Produto produto)
         {
-            if (ModelState.IsValid)
-            {
-                db.Produtos.Add(produto);
-                db.SaveChanges();
-                return RedirectToAction("Index");
-            }
-
-            return View(produto);
+            Item1.tipoProduto = tipoProduto;
+            db.Produtos.Add(Item1);
+            db.SaveChanges();
+            return RedirectToAction("Create", "Produtos");
         }
 
         // GET: Produtos/Edit/5

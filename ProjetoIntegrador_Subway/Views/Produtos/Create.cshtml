@@ -1,4 +1,4 @@
-﻿@model IEnumerable<ProjetoIntegrador_Subway.Models.Produto>
+﻿@model Tuple<ProjetoIntegrador_Subway.Models.Produto, IEnumerable<ProjetoIntegrador_Subway.Models.Produto>>
 
 @{
     ViewBag.Title = "Create";
@@ -26,22 +26,21 @@
         </div>
         <div class="col-md-3 col-centered">
             <div class="form-group">
-                @Html.EditorFor(model => model.FirstOrDefault().nomeProduto, new { htmlAttributes = new { @class = "form-control", @placeholder = "Nome do produto" } })
-                @Html.ValidationMessageFor(model => model.FirstOrDefault().nomeProduto, "", new { @class = "text-danger" })
+                @Html.EditorFor(model => model.Item1.nomeProduto, new { htmlAttributes = new { @class = "form-control mBottom", @placeholder = "Nome do produto" } })
+                @Html.ValidationMessageFor(model => model.Item1.nomeProduto, "", new { @class = "text-danger" })
 
-                @Html.EditorFor(model => model.FirstOrDefault().valorProduto, new { htmlAttributes = new { @class = "form-control", @placeholder = "Valor do produto" } })
-                @Html.ValidationMessageFor(model => model.FirstOrDefault().valorProduto, "", new { @class = "text-danger" })
+                @Html.EditorFor(model => model.Item1.valorProduto, new { htmlAttributes = new { @class = "form-control mBottom", @placeholder = "Valor do produto" } })
+                @Html.ValidationMessageFor(model => model.Item1.valorProduto, "", new { @class = "text-danger" })
 
-                @Html.EditorFor(model => model.FirstOrDefault().limitePorLanche, new { htmlAttributes = new { @class = "form-control", @placeholder = "Limite por lanche" } })
-                @Html.ValidationMessageFor(model => model.FirstOrDefault().limitePorLanche, "", new { @class = "text-danger" })
+                @Html.EditorFor(model => model.Item1.limitePorLanche, new { htmlAttributes = new { @class = "form-control mBottom", @placeholder = "Limite por lanche" } })
+                @Html.ValidationMessageFor(model => model.Item1.limitePorLanche, "", new { @class = "text-danger" })
 
-                <select class="form-control">
-
+                <select class="form-control" name="tipoProduto" id="tipoProduto">
                     @{
-                        foreach (var item in ViewBag.CategoriaP)
-                        {
-                            <option>@item</option>
-                        }
+                    foreach (var item in ViewBag.CategoriaP)
+                    {
+                        <option>@item</option>
+                }
                     }
                 </select>
 
@@ -54,79 +53,70 @@
             </div>
             @*<img src="~/Imagens/Subway.png" style="width: 50%; margin-top: 20px; margin-right: 10px; margin-left: 30%" />*@
         </div>
+
         <hr />
-        <table class="table">
+        <table class="table table-hover table-bordered" style="background-color: white !important">
             <tr>
                 <th>
-                    @Html.DisplayNameFor(model => model.nomeProduto)
+                    <center>
+                        @Html.DisplayNameFor(model => model.Item1.ID)
+                    </center>
                 </th>
                 <th>
-                    @Html.DisplayNameFor(model => model.valorProduto)
+                    <center>
+                        @Html.DisplayNameFor(model => model.Item1.nomeProduto)
+                    </center>
                 </th>
                 <th>
-                    @Html.DisplayNameFor(model => model.limitePorLanche)
+                    <center>
+                        @Html.DisplayNameFor(model => model.Item1.valorProduto)
+                    </center>
                 </th>
                 <th>
-                    @Html.DisplayNameFor(model => model.tipoProduto)
+                    <center>
+                        @Html.DisplayNameFor(model => model.Item1.limitePorLanche)
+                    </center>
                 </th>
                 <th>
-                    @Html.DisplayNameFor(model => model.qtdEstoque)
+                    <center>
+                        @Html.DisplayNameFor(model => model.Item1.tipoProduto)
+                    </center>
                 </th>
-                <th></th>
+                <th>
+                    <center>
+                        @Html.DisplayNameFor(model => model.Item1.qtdEstoque)
+                    </center>
+                </th>
             </tr>
-
-            @foreach (var item in Model)
+            @foreach (var item in Model.Item2)
             {
                 <tr>
                     <td>
-                        @Html.DisplayFor(modelItem => item.nomeProduto)
+                        <center>
+                            @item.ID
+                        </center>
                     </td>
                     <td>
-                        @Html.DisplayFor(modelItem => item.valorProduto)
+                        @item.nomeProduto
                     </td>
                     <td>
-                        @Html.DisplayFor(modelItem => item.limitePorLanche)
+                        <center>
+                            R$ @item.valorProduto
+                        </center>
                     </td>
                     <td>
-                        @Html.DisplayFor(modelItem => item.tipoProduto)
+                        <center>@item.limitePorLanche</center>
                     </td>
                     <td>
-                        @Html.DisplayFor(modelItem => item.qtdEstoque)
+                        @item.tipoProduto
+                    </td>
+                    <td style="width: 15%">
+                        <center>
+                            @item.qtdEstoque
+                        </center>
                     </td>
                 </tr>
-            }
-
+        }
         </table>
-
-        @*<table class="table table-hover table-bordered" style="background-color: white !important">
-                <tr>
-                    <th>
-                        <center>
-                            @Html.DisplayNameFor(model => model.Email)
-                        </center>
-                    </th>
-                    <th>
-                        <center>
-                            @Html.DisplayNameFor(model => model.Name)
-                        </center>
-                    </th>
-                </tr>
-                @{
-                    Dictionary<object, object> lista = (Dictionary<object, object>)ViewBag.Users;
-                    foreach (var item in lista)
-                    {
-
-                        <tr>
-                            <td>
-                                @Html.DisplayFor(modelItem => item.Key)
-                            </td>
-                            <td>
-                                @Html.DisplayFor(modelItem => item.Value)
-                            </td>
-                        </tr>
-
-                    }
-                }
-            </table>*@
     </div>
 }
