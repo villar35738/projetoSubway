@@ -80,15 +80,11 @@ namespace ProjetoIntegrador_Subway.Controllers
         // more details see https://go.microsoft.com/fwlink/?LinkId=317598.
         [HttpPost]
         [ValidateAntiForgeryToken]
-        public ActionResult Edit([Bind(Include = "ID,nomeProduto,valorProduto,limitePorLanche,tipoProduto,qtdEstoque")] Produto produto)
+        public ActionResult Edit(Produto produto)
         {
-            if (ModelState.IsValid)
-            {
                 db.Entry(produto).State = EntityState.Modified;
                 db.SaveChanges();
                 return RedirectToAction("Index");
-            }
-            return View(produto);
         }
 
         // GET: Produtos/Delete/5

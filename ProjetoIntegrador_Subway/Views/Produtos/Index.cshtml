@@ -5,54 +5,71 @@
     Layout = "~/Views/Shared/_Layout.cshtml";
 }
 
-<h2>Index</h2>
+<div class="row">
+    <div class="col-md-6 col-centered">
+        <center><h3>Inserir produtos no estoque</h3></center>
+    </div>
+</div>
+<hr />
 
-<p>
-    @Html.ActionLink("Create New", "Create")
-</p>
-<table class="table">
+<table class="table table-hover table-bordered" style="background-color: white !important">
     <tr>
         <th>
-            @Html.DisplayNameFor(model => model.nomeProduto)
+            <center>
+                @Html.DisplayNameFor(model => model.nomeProduto)
+            </center>
         </th>
         <th>
-            @Html.DisplayNameFor(model => model.valorProduto)
+            <center>
+                @Html.DisplayNameFor(model => model.valorProduto)
+            </center>
         </th>
         <th>
-            @Html.DisplayNameFor(model => model.limitePorLanche)
+            <center>
+                @Html.DisplayNameFor(model => model.limitePorLanche)
+            </center>
         </th>
         <th>
-            @Html.DisplayNameFor(model => model.tipoProduto)
+            <center>
+                @Html.DisplayNameFor(model => model.tipoProduto)
+            </center>
         </th>
         <th>
-            @Html.DisplayNameFor(model => model.qtdEstoque)
+            <center>
+                @Html.DisplayNameFor(model => model.qtdEstoque)
+            </center>
         </th>
         <th></th>
     </tr>
 
-@foreach (var item in Model) {
-    <tr>
-        <td>
-            @Html.DisplayFor(modelItem => item.nomeProduto)
-        </td>
-        <td>
-            @Html.DisplayFor(modelItem => item.valorProduto)
-        </td>
-        <td>
-            @Html.DisplayFor(modelItem => item.limitePorLanche)
-        </td>
-        <td>
-            @Html.DisplayFor(modelItem => item.tipoProduto)
-        </td>
-        <td>
-            @Html.DisplayFor(modelItem => item.qtdEstoque)
-        </td>
-        <td>
-            @Html.ActionLink("Edit", "Edit", new { id=item.ID }) |
-            @Html.ActionLink("Details", "Details", new { id=item.ID }) |
-            @Html.ActionLink("Delete", "Delete", new { id=item.ID })
-        </td>
-    </tr>
-}
+    @foreach (var item in Model)
+    {
+        <tr>
+            <td>
+                @Html.DisplayFor(modelItem => item.nomeProduto)
+            </td>
+            <td>
+                <center>
+                    R$ @Html.DisplayFor(modelItem => item.valorProduto)
+                </center>
+            </td>
+            <td>
+                <center>
+                     @Html.DisplayFor(modelItem => item.limitePorLanche) unidades
+                </center>
+            </td>
+            <td>
+                @Html.DisplayFor(modelItem => item.tipoProduto)
+            </td>
+            <td>
+                <center>
+                   @Html.DisplayFor(modelItem => item.qtdEstoque) unidades
+                </center>
+            </td>
+            <td>
+                @Html.ActionLink("Adicionar produto", "Edit", new { id = item.ID })
+            </td>
+        </tr>
+    }
 
 </table>
