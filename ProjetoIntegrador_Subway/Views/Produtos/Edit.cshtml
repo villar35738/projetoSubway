@@ -28,8 +28,8 @@
         </div>
     </div>
     <div class="form-group">
-        @Html.LabelFor(model => model.nomeProduto, htmlAttributes: new { @class = "control-label col-md-2" })
-        <div class="col-md-10">
+        <div class="col-md-3 col-centered">
+            @Html.LabelFor(model => model.nomeProduto, htmlAttributes: new { @class = "control-label col-md-2", @style = "width: 100%; margin-left: -59px;" })
             <input type="text" class="form-control" name="name" value="@Model.nomeProduto" disabled />
         </div>
     </div>
@@ -58,16 +58,18 @@
     </div>
 
     <div class="form-group">
-        @Html.LabelFor(model => model.qtdEstoque, htmlAttributes: new { @class = "control-label col-md-2" })
-        <div class="col-md-10">
+        <div class="col-md-3 col-centered">
+            @Html.LabelFor(model => model.qtdEstoque, htmlAttributes: new { @class = "control-label col-md-2", @style = "width: 100%; margin-left: -38px;" })
             @Html.EditorFor(model => model.qtdEstoque, new { htmlAttributes = new { @class = "form-control" } })
             @Html.ValidationMessageFor(model => model.qtdEstoque, "", new { @class = "text-danger" })
         </div>
     </div>
 
     <div class="form-group">
-        <div class="col-md-offset-2 col-md-10">
-            <input type="submit" value="Save" class="btn btn-default" />
+        <div class="col-md-offset-2 col-md-3 col-centered">
+            <center>
+                <input type="submit" value="Save" class="btn btn-default" />
+            </center>
         </div>
     </div>
 </div>

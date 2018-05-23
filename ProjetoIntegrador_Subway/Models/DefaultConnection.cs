@@ -10,5 +10,7 @@ namespace ProjetoIntegrador_Subway.Models
     {
         public DbSet<Produto> Produtos { get; set; }
         public DbSet<CategoriaProduto> CategoriaProdutos { get; set; }
+        public DbSet<Pedido> Pedidos { get; set; }
+        public DbSet<Pedido_Ingredientes> Pedidos_Ingredientes { get; set; }
     }
 }
