@@ -22,5 +22,8 @@ namespace ProjetoIntegrador_Subway.Models
         [Required]
         [Display(Name = "Valor total")]
         public decimal valorTotal { get; set; }
+
+        [Display(Name = "Status do pagamento")]
+        public string pgtRecebido { get; set; }
     }
 }

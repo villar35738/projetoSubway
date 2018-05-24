@@ -18,7 +18,7 @@ namespace ProjetoIntegrador_Subway.Models
 
         [Required]
         [Display(Name = "Valor do produto")]
-        public double valorProduto { get; set; }
+        public decimal valorProduto { get; set; }
 
         [Required]
         [Display(Name = "Limite por lanche")]

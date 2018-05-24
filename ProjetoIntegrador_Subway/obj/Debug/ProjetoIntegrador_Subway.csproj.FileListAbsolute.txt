@@ -363,3 +363,5 @@ D:\1 - Faculdade\S.I 5°Semestre\Projeto Integrador\projetoSubway\ProjetoIntegra
 D:\1 - Faculdade\S.I 5°Semestre\Projeto Integrador\projetoSubway\ProjetoIntegrador_Subway\obj\Debug\ProjetoIntegrador_Subway.csproj.CopyComplete
 D:\1 - Faculdade\S.I 5°Semestre\Projeto Integrador\projetoSubway\ProjetoIntegrador_Subway\obj\Debug\ProjetoIntegrador_Subway.dll
 D:\1 - Faculdade\S.I 5°Semestre\Projeto Integrador\projetoSubway\ProjetoIntegrador_Subway\obj\Debug\ProjetoIntegrador_Subway.pdb
+D:\GIT Projects\ProjetoIntegrador_Subway_new\projetoSubway\ProjetoIntegrador_Subway\obj\Debug\ProjetoIntegrador_Subway.Migrations.AlterandovalorProdutoparatypeNumeric.resources
+D:\GIT Projects\ProjetoIntegrador_Subway_new\projetoSubway\ProjetoIntegrador_Subway\obj\Debug\ProjetoIntegrador_Subway.Migrations.AdicionandoocampopgtRecebidonatabelaProdutos.resources
