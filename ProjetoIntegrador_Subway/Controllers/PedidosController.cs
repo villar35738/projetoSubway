@@ -20,5 +20,10 @@ namespace ProjetoIntegrador_Subway.Controllers
             ViewBag.CategoriaP = db.CategoriaProdutos.Select(w => w.nomeCategoria).ToList();
             return View(db.Produtos.ToList());
         }
+
+        public ActionResult TodosPedidos()
+        {
+            return View(db.Pedidos.ToList());
+        }
     }
 }

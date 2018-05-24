@@ -152,9 +152,9 @@ namespace ProjetoIntegrador_Subway.Controllers
                 foreach (var teste in userId)
                 {
                     var result = from role in context.Roles
-                            where role.Id == teste.RoleId
-                            from user in role.Users
-                            select new { teste.UserName, role.Name };
+                                 where role.Id == teste.RoleId
+                                 from user in role.Users
+                                 select new { teste.UserName, role.Name };
 
                     obj.Add(result.FirstOrDefault().UserName, result.FirstOrDefault().Name);
                 }

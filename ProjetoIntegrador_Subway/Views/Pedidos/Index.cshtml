@@ -3,7 +3,7 @@
 @{
     ViewBag.Title = "Index";
     Layout = "~/Views/Shared/_Layout.cshtml";
-    ViewBag.Categoria = "a";
+    ViewBag.Categoria = Model;
 }
 
 <div class="row">
@@ -14,14 +14,14 @@
 <hr />
 <div class="row">
     <div class="col-md-5">
-        <select class="form-control" name="tipoProduto" id="tipoProduto" onchange="myFunction()">
-            @{
-                foreach (var item in ViewBag.CategoriaP)
-                {
-                <option>@item</option>
-        }
-            }
-        </select>
+        @*<select class="form-control" name="tipoProduto" id="tipoProduto" onchange="myFunction()" style="max-width: 100%;">
+                @{
+                    foreach (var item in ViewBag.CategoriaP)
+                    {
+                        <option>@item</option>
+                    }
+                }
+            </select>*@
 
         <table class="table table-hover table-bordered" style="background-color: white !important" id="myTable">
             <tr>
@@ -44,57 +44,161 @@
             </tr>
 
             @{
-            foreach (var item in Model)
-            {
-                <tr>
-                    <td>
-                        @Html.DisplayFor(modelItem => item.nomeProduto)
-                    </td>
-                    <td>
-                        <center>
-                            R$ @Html.DisplayFor(modelItem => item.valorProduto)
-                        </center>
-                    </td>
-                    <td>
-                        @Html.DisplayFor(modelItem => item.tipoProduto)
-                    </td>
-                    <td>
-                        @Html.ActionLink("Adicionar ao lanche", "Edit", new { id = item.ID })
-                    </td>
-                </tr>
-                }
+            <tr>
+                <th colspan="4"><center>Pães</center></th>
+            </tr>
+        foreach (var item in Model.Where(u => u.tipoProduto.Equals("Pães")))
+        {
+            <tr>
+                <td>
+                    @Html.DisplayFor(modelItem => item.nomeProduto)
+                </td>
+                <td>
+                    <center>
+                        R$ @Html.DisplayFor(modelItem => item.valorProduto)
+                    </center>
+                </td>
+                <td>
+                    @Html.DisplayFor(modelItem => item.tipoProduto)
+                </td>
+                <td>
+                    @Html.ActionLink("Adicionar ao lanche", "Edit", new { id = item.ID })
+                </td>
+            </tr>
+}
+            <tr>
+                <th colspan="4"><center>Ingredientes</center></th>
+            </tr>
+foreach (var item in Model.Where(u => u.tipoProduto.Equals("Ingredientes")))
+{
+        <tr>
+            <td>
+                @Html.DisplayFor(modelItem => item.nomeProduto)
+            </td>
+            <td>
+                <center>
+                    R$ @Html.DisplayFor(modelItem => item.valorProduto)
+                </center>
+            </td>
+            <td>
+                @Html.DisplayFor(modelItem => item.tipoProduto)
+            </td>
+            <td>
+                @Html.ActionLink("Adicionar ao lanche", "Edit", new { id = item.ID })
+            </td>
+        </tr>
+}
+
+        <tr>
+            <th colspan="4"><center>Saladas</center></th>
+        </tr>
+
+
+foreach (var item in Model.Where(u => u.tipoProduto.Equals("Saladas")))
+{
+        <tr>
+            <td>
+                @Html.DisplayFor(modelItem => item.nomeProduto)
+            </td>
+            <td>
+                <center>
+                    R$ @Html.DisplayFor(modelItem => item.valorProduto)
+                </center>
+            </td>
+            <td>
+                @Html.DisplayFor(modelItem => item.tipoProduto)
+            </td>
+            <td>
+                @Html.ActionLink("Adicionar ao lanche", "Edit", new { id = item.ID })
+            </td>
+        </tr>
+}
+        <tr>
+            <th colspan="4"><center>Molhos</center></th>
+        </tr>
+foreach (var item in Model.Where(u => u.tipoProduto.Equals("Molhos")))
+{
+        <tr>
+            <td>
+                @Html.DisplayFor(modelItem => item.nomeProduto)
+            </td>
+            <td>
+                <center>
+                    R$ @Html.DisplayFor(modelItem => item.valorProduto)
+                </center>
+            </td>
+            <td>
+                @Html.DisplayFor(modelItem => item.tipoProduto)
+            </td>
+            <td>
+                @Html.ActionLink("Adicionar ao lanche", "Edit", new { id = item.ID })
+            </td>
+        </tr>
+}
+        <tr>
+            <th colspan="4"><center>Bebidas</center></th>
+        </tr>
+foreach (var item in Model.Where(u => u.tipoProduto.Equals("Bebidas")))
+{
+        <tr>
+            <td>
+                @Html.DisplayFor(modelItem => item.nomeProduto)
+            </td>
+            <td>
+                <center>
+                    R$ @Html.DisplayFor(modelItem => item.valorProduto)
+                </center>
+            </td>
+            <td>
+                @Html.DisplayFor(modelItem => item.tipoProduto)
+            </td>
+            <td>
+                @Html.ActionLink("Adicionar ao pedido", "Edit", new { id = item.ID })
+            </td>
+        </tr>
+}
+
             }
-
-
-
-
         </table>
-        
     </div>
-    <div class="col-md-5">
+    <div class="col-md-5" style="max-width: 30%">
+        <div class="panel panel-default">
+            <div class="panel-heading">Pagamento</div>
+            <div class="panel-body">
+
+            </div>
+        </div>
+    </div>
+    <div class="col-md-5" style="float: right; width: 27%;">
         <div class="panel panel-default">
             <div class="panel-heading">Visualização do pedido</div>
             <div class="panel-body">
 
             </div>
         </div>
+        <input type="button" value="Concluir" class="btn btn-default" style="float: right" />
     </div>
 </div>
-<h2>aaa @ViewBag.Categoria</h2>
 <script type="text/javascript">
     function myFunction() {
         var filter, table, tr, td, i;
         filter = document.getElementById("tipoProduto").value;
-        alert(filter);
+        //alert(filter);
         table = document.getElementById("myTable");
+        alert("A " + table.innerText);
         tr = table.getElementsByTagName("tr");
-        for (i = 0; i < tr.length; i++) {
-            td = tr[i].getElementsByTagName("td")[2];
+        alert("B " + tr.item(2).innerText);
+        for (i = 1; i < tr.length; i++) {
+            td = tr[i].getElementsByTagName("td");
+            //alert("C: " + td.item(2).innerText);
             if (td) {
-                if (td.innerHTML.toUpperCase().indexOf(filter) > -1) {
-                    tr[i].style.display = "";
+                if (td.item(2).innerText != filter) {
+                    //alert("PAA");
+                    tr[i].style.display = "none"
+                    //tr[i].style.display = "";
                 } else {
-                    tr[i].style.display = "none";
+                    //alert("NAO PAAA");
+                    //tr[i].style.display = "contents"
                 }
             }
         }
