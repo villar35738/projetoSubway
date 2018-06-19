@@ -20,7 +20,5 @@ namespace ProjetoIntegrador_Subway.Models
         public virtual Produto Produto { get; set; }
 
         public int Quantidade { get; set; }
-
-        public decimal TotalQtd { get; set; }
     }
 }

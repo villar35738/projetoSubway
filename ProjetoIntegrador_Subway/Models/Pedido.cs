@@ -25,5 +25,11 @@ namespace ProjetoIntegrador_Subway.Models
 
         [Display(Name = "Status do pagamento")]
         public string pgtRecebido { get; set; }
+
+        [Display(Name = "CEP")]
+        public string CEP { get; set; }
+
+        [Display(Name = "Número")]
+        public string numero { get; set; }
     }
 }

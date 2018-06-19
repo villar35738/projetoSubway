@@ -1,4 +1,5 @@
-﻿@model IEnumerable<ProjetoIntegrador_Subway.Models.Produto>
+﻿@model Tuple<IEnumerable<ProjetoIntegrador_Subway.Models.Pedido>, IEnumerable<ProjetoIntegrador_Subway.Models.Produto>>
+@using Microsoft.AspNet.Identity
 
 @{
     ViewBag.Title = "Index";
@@ -12,32 +13,24 @@
     </div>
 </div>
 <hr />
+@Html.EditorFor(model => model.Item1.FirstOrDefault().ID, new { htmlAttributes = new { @class = "form-control", @id = "ID", @disabled = "disabled", @style = "width: 8%; display: none" } })
 <div class="row">
     <div class="col-md-5">
-        @*<select class="form-control" name="tipoProduto" id="tipoProduto" onchange="myFunction()" style="max-width: 100%;">
-                @{
-                    foreach (var item in ViewBag.CategoriaP)
-                    {
-                        <option>@item</option>
-                    }
-                }
-            </select>*@
-
-        <table class="table table-hover table-bordered" style="background-color: white !important" id="myTable">
+        <table class="table table-hover table-bordered" style="background-color: white !important; width: 846px;" id="myTable">
             <tr>
                 <th>
                     <center>
-                        @Html.DisplayNameFor(model => model.nomeProduto)
+                        @Html.DisplayNameFor(model => model.Item2.FirstOrDefault().nomeProduto)
                     </center>
                 </th>
                 <th>
                     <center>
-                        @Html.DisplayNameFor(model => model.valorProduto)
+                        @Html.DisplayNameFor(model => model.Item2.FirstOrDefault().valorProduto)
                     </center>
                 </th>
                 <th>
                     <center>
-                        @Html.DisplayNameFor(model => model.tipoProduto)
+                        @Html.DisplayNameFor(model => model.Item2.FirstOrDefault().tipoProduto)
                     </center>
                 </th>
                 <th></th>
@@ -47,7 +40,7 @@
                 <tr>
                     <th colspan="4"><center>Pães</center></th>
                 </tr>
-                foreach (var item in Model.Where(u => u.tipoProduto.Equals("Pães")))
+                foreach (var item in Model.Item2.Where(u => u.tipoProduto.Equals("Pães")))
                 {
                     <tr>
                         <td>
@@ -61,15 +54,16 @@
                         <td>
                             @Html.DisplayFor(modelItem => item.tipoProduto)
                         </td>
-                        <td onclick="addToList(@item.ID, '@item.nomeProduto', @item.limitePorLanche, @item.qtdEstoque, @item.valorProduto)">
-                            <p class="btn-link">Adicionar ao lanche</p>
+                        <td style="width: 112px;">
+                            <input type="number" style="float: left; width: 60px" id="qtdItem" onclick="changeItemQtd(this.value)" class="form-control" max="@item.limitePorLanche" min="0" />
+                            <input type="button" class="btn btn-default" onclick="addToList(@item.ID, '@item.nomeProduto', @item.limitePorLanche, @item.qtdEstoque,'@item.valorProduto')" value="+" />
                         </td>
                     </tr>
                 }
                 <tr>
                     <th colspan="4"><center>Ingredientes</center></th>
                 </tr>
-                foreach (var item in Model.Where(u => u.tipoProduto.Equals("Ingredientes")))
+                foreach (var item in Model.Item2.Where(u => u.tipoProduto.Equals("Ingredientes")))
                 {
                     <tr>
                         <td>
@@ -83,9 +77,9 @@
                         <td>
                             @Html.DisplayFor(modelItem => item.tipoProduto)
                         </td>
-                        <td onclick="addToList(@item.ID, '@item.nomeProduto', @item.limitePorLanche, @item.qtdEstoque, @item.valorProduto)">
-                            <p class="btn-link">Adicionar ao lanche</p>
-                            @*@Html.ActionLink("Adicionar ao lanche", "", new { id = item.ID })*@
+                        <td style="width: 112px;">
+                            <input type="number" style="float: left; width: 60px" id="qtdItem" onclick="changeItemQtd(this.value)" class="form-control" max="@item.limitePorLanche" min="0" />
+                            <input type="button" class="btn btn-default" onclick="addToList(@item.ID, '@item.nomeProduto', @item.limitePorLanche, @item.qtdEstoque,'@item.valorProduto')" value="+" />
                         </td>
                     </tr>
                 }
@@ -95,7 +89,7 @@
                 </tr>
 
 
-                foreach (var item in Model.Where(u => u.tipoProduto.Equals("Saladas")))
+                foreach (var item in Model.Item2.Where(u => u.tipoProduto.Equals("Saladas")))
                 {
                     <tr>
                         <td>
@@ -109,16 +103,16 @@
                         <td>
                             @Html.DisplayFor(modelItem => item.tipoProduto)
                         </td>
-                        <td onclick="addToList(@item.ID, '@item.nomeProduto', @item.limitePorLanche, @item.qtdEstoque, @item.valorProduto)"><td onclick="addToList(@item.ID, '@item.nomeProduto', @item.limitePorLanche, @item.qtdEstoque, @item.valorProduto)">
-                            <p class="btn-link">Adicionar ao lanche</p>
-                            @*@Html.ActionLink("Adicionar ao lanche", "", new { id = item.ID })*@
+                        <td style="width: 112px;">
+                            <input type="number" style="float: left; width: 60px" id="qtdItem" onclick="changeItemQtd(this.value)" class="form-control" max="@item.limitePorLanche" min="0" />
+                            <input type="button" class="btn btn-default" onclick="addToList(@item.ID, '@item.nomeProduto', @item.limitePorLanche, @item.qtdEstoque,'@item.valorProduto')" value="+" />
                         </td>
                     </tr>
                 }
                 <tr>
                     <th colspan="4"><center>Molhos</center></th>
                 </tr>
-                foreach (var item in Model.Where(u => u.tipoProduto.Equals("Molhos")))
+                foreach (var item in Model.Item2.Where(u => u.tipoProduto.Equals("Molhos")))
                 {
                     <tr>
                         <td>
@@ -132,16 +126,16 @@
                         <td>
                             @Html.DisplayFor(modelItem => item.tipoProduto)
                         </td>
-                        <td onclick="addToList(@item.ID, '@item.nomeProduto', @item.limitePorLanche, @item.qtdEstoque, @item.valorProduto)">
-                            <p class="btn-link">Adicionar ao lanche</p>
-                            @*@Html.ActionLink("Adicionar ao lanche", "", new { id = item.ID })*@
+                        <td style="width: 112px;">
+                            <input type="number" style="float: left; width: 60px" id="qtdItem" onclick="changeItemQtd(this.value)" class="form-control" max="@item.limitePorLanche" min="0" />
+                            <input type="button" class="btn btn-default" onclick="addToList(@item.ID, '@item.nomeProduto', @item.limitePorLanche, @item.qtdEstoque,'@item.valorProduto')" value="+" />
                         </td>
                     </tr>
                 }
                 <tr>
                     <th colspan="4"><center>Bebidas</center></th>
                 </tr>
-                foreach (var item in Model.Where(u => u.tipoProduto.Equals("Bebidas")))
+                foreach (var item in Model.Item2.Where(u => u.tipoProduto.Equals("Bebidas")))
                 {
                     <tr>
                         <td>
@@ -155,21 +149,92 @@
                         <td>
                             @Html.DisplayFor(modelItem => item.tipoProduto)
                         </td>
-                        <td onclick="addToList(@item.ID, '@item.nomeProduto', @item.limitePorLanche, @item.qtdEstoque, @item.valorProduto)">
-                            <p class="btn-link">Adicionar ao pedido</p>
-                            @*@Html.ActionLink("Adicionar ao lanche", "", new { id = item.ID })*@
+                        <td style="width: 112px;">
+                            <input type="number" style="float: left; width: 60px" id="qtdItem" onclick="changeItemQtd(this.value)" class="form-control" max="@item.limitePorLanche" min="0" />
+                            <input type="button" class="btn btn-default" onclick="addToList(@item.ID, '@item.nomeProduto', @item.limitePorLanche, @item.qtdEstoque,'@item.valorProduto')" value="+" />
                         </td>
                     </tr>
                 }
-
             }
         </table>
     </div>
-    <div class="col-md-5" style="max-width: 30%">
-        <div class="panel panel-default">
-            <div class="panel-heading">Pagamento</div>
-            <div class="panel-body">
-                <p>MasterCard</p>
+    <!-- Modal -->
+    <div class="modal fade" id="ModalPgt" tabindex="-1" role="dialog" aria-labelledby="exampleModalCenterTitle" aria-hidden="true">
+        <div class="modal-dialog modal-dialog-centered" role="document">
+            <div class="modal-content">
+                <div class="modal-header">
+                    <h5 class="modal-title" id="exampleModalLongTitle">Escolha o método de pagamento</h5>
+                    <button type="button" class="close" style="margin-top: -19px" data-dismiss="modal" aria-label="Close">
+                        <span aria-hidden="true">&times;</span>
+                    </button>
+                </div>
+                <div class="modal-body" id="optionsPgt" style="text-align: center">
+                    <div class="form-check">
+                        <input class="form-check-input" type="radio" value="money" name="exampleRadios" id="money" value="option1" checked>
+                        <label class="form-check-label" for="money">
+                            <img src="~/Imagens/money.png" style="width: 23%" />
+                        </label>
+                    </div>
+                    <div class="form-check">
+                        <input class="form-check-input" type="radio" value="mastercard" name="exampleRadios" id="mastercard" value="option2">
+                        <label class="form-check-label" for="mastercard">
+                            <img src="~/Imagens/mastercard.png" style="width: 23%" />
+                        </label>
+                    </div>
+                    <div class="form-check">
+                        <input class="form-check-input" type="radio" value="visa" name="exampleRadios" id="visa" value="option3">
+                        <label class="form-check-label" for="visa">
+                            <img src="~/Imagens/visa.png" style="width: 23%" />
+                        </label>
+                    </div>
+                </div>
+                <div class="modal-footer">
+                    <button type="button" class="btn btn-secondary" id="closeModalPgt" data-dismiss="modal">Cancelar</button>
+                    <button type="button" class="btn btn-primary" onclick="checkOption()">Próximo</button>
+                </div>
+            </div>
+        </div>
+    </div>
+    <div class="modal fade" id="ModalEndereco" tabindex="-1" role="dialog" aria-labelledby="exampleModalLabel" aria-hidden="true">
+        <div class="modal-dialog" role="document">
+            <div class="modal-content">
+                <div class="modal-header">
+                    <h5 class="modal-title" id="exampleModalLabel">Insira seu endereço</h5>
+                    <button type="button" class="close" style="margin-top: -19px" data-dismiss="modal" aria-label="Close">
+                        <span aria-hidden="true">&times;</span>
+                    </button>
+                </div>
+                <div class="modal-body" style="text-align: -webkit-center">
+                    <form>
+                        <div class="form-group">
+                            <label for="cep" class="col-form-label">CEP:</label>
+                            <input type="text" class="form-control" id="cep">
+                        </div>
+                        <div class="form-group">
+                            <label for="numero" class="col-form-label">Número:</label>
+                            <input class="form-control" id="numero">
+                        </div>
+                    </form>
+                </div>
+                <div class="modal-footer">
+                    <button type="button" class="btn btn-secondary" data-dismiss="modal">Cancelar</button>
+                    <button type="button" class="btn btn-primary" onclick="concluirCartao();">Concluído</button>
+                </div>
+            </div>
+        </div>
+    </div>
+    <div class="modal fade bd-example-modal-sm" id="ModalAlerta" tabindex="-1" role="dialog" aria-labelledby="mySmallModalLabel" aria-hidden="true">
+        <div class="modal-dialog modal-sm">
+            <div class="modal-content">
+                <div class="modal-header">
+                    <h5 class="modal-title" id="exampleModalLabel">Alerta</h5>
+                    <button type="button" class="close" style="margin-top: -19px" data-dismiss="modal" aria-label="Close">
+                        <span aria-hidden="true">&times;</span>
+                    </button>
+                </div>
+                <div class="modal-body">
+                    Adicione pelo menos 1 ingrediente ao seu lanche.
+                </div>
             </div>
         </div>
     </div>
@@ -177,17 +242,164 @@
         <div class="panel panel-default">
             <div class="panel-heading">Visualização do pedido</div>
             <div class="panel-body">
-                <ol id="idOlPedido">
-
-                </ol>
-                <p>-------Total-------</p>
+                <ol id="idOlPedido"></ol>
+                <center><p style="border-style: dashed; border-color: #00984594"><b>Total</b></p></center>
+                <input class="form-control" type="text" id="totalP" style="width: 100%; text-align: center" disabled />
             </div>
         </div>
-        <input type="button" value="Concluir" class="btn btn-default" style="float: right" />
+        <input type="button" value="Concluir" data-toggle="modal" onclick="validar()" class="btn btn-default" style="float: right" />
     </div>
 </div>
-<script type="text/javascript"> 
+<script type="text/javascript">
+    var stateModule = (function () {
+        var state = 0.0; // Private Variable
+
+        var pub = {};// public object - returned at end of module
+
+        pub.changeState = function (newstate) {
+            //set the new state
+            state = (parseFloat(state) + parseFloat(newstate)).toFixed(2);
+        };
+
+        pub.getState = function () {
+            return state;
+        }
+
+        return pub; // expose externally
+    }());
+
+    function changeItemQtd(qtd) {
+        qtdItemF.changeState(qtd);
+    }
+
+    var qtdItemF = (function () {
+        var qtd; // Private Variable
+
+        var pub = {};// public object - returned at end of module
+
+        pub.changeState = function (newstate) {
+            //alert(newstate);
+            qtd = newstate;
+        };
+
+        pub.getState = function () {
+            return qtd;
+        }
+
+        return pub; // expose externally
+    }());
+
+    function parseCurrency(num) {
+        return parseFloat(num.replace(/,/g, '.'));
+    }
+
     function addToList(id, nome, limite, estoque, valor) {
-        $("#idOlPedido").append("<li>" + nome + " - R$ " + valor + "</li>");
+        var precoQtd = parseCurrency(valor) * parseInt(qtdItemF.getState());
+        $("#idOlPedido").append("<li>" + nome + " - R$ " + precoQtd + " - Quantidade: " + qtdItemF.getState() + "</li>");
+        stateModule.changeState(precoQtd);
+        listaIngredientes.changeState(id, parseInt(qtdItemF.getState()));
+        alert(listaIngredientes.getState());
+        document.getElementById('totalP').value = "R$ " + stateModule.getState();
+    }
+
+    //var listaIngredientes = (function () {
+    //    var ingredientes = [];
+
+    //    var pub = {};// public object - returned at end of module
+
+    //    pub.changeState = function (id, quantidade) {
+    //        ingredientes.push({ idIng: id, quantidadeIng: quantidade })
+    //    };
+
+    //    pub.getState = function () {
+    //        return ingredientes;
+    //    }
+
+    //    return pub; // expose externally
+    //}());
+
+    var listaIngredientes = (function () {
+        debugger;
+        var ingredientes = {};
+        var index = 0;
+        var pub = {};// public object - returned at end of module
+
+        pub.changeState = function (id, quantidade) {
+            debugger;
+            ingredientes["stepsDictionary[" + index + "].Key"] = id;
+            ingredientes["stepsDictionary[" + index + "].Value"] = quantidade;
+            index = index + 1;
+            //ingredientes.push({ idIng: id, quantidadeIng: quantidade })
+        };
+
+        pub.getState = function () {
+            return ingredientes;
+        }
+
+        return pub; // expose externally
+    }());
+
+    function concluir() {
+        var ingredientes = listaIngredientes.getState();
+        //for (var i = 0, count = ingredientes.length; i < count; i++) {
+        //    alert(ingredientes[i].Key + " q: " + ingredientes[i].Value);
+        //}
+
+        var total = stateModule.getState();
+        var usrName = "@HttpContext.Current.User.Identity.Name";
+        var id = $('#ID').val();
+        $.ajax({
+            type: "POST",
+            url: "/Pedidos/montarLanche",
+            data: { ingredientes: ingredientes, usrName: usrName, total: total, id: id },
+            traditional: true,
+            success: function (data) {
+                alert("UI");;
+            },
+            error: function (xhr, err) {
+                alert("readyState: " + xhr.readyState + "\nstatus: " + xhr.status);
+                alert("responseText: " + xhr.responseText);
+            }
+        });
+    }
+
+    function concluirCartao() {
+        var ingredientes = listaIngredientes.getState();
+        var cep = $('#cep').val();
+        var numero = $('#numero').val();
+        $.ajax({
+            type: "POST",
+            url: "/Pedidos/montarLancheCartao",
+            data: { ingredientes: ingredientes },
+            traditional: true,
+            success: function (data) {
+                alert("UI");;
+            },
+            error: function (xhr, err) {
+                alert("readyState: " + xhr.readyState + "\nstatus: " + xhr.status);
+                alert("responseText: " + xhr.responseText);
+            }
+        });
+    }
+
+    function checkOption() {
+        var selected_option = $('input[name=exampleRadios]:checked', '#optionsPgt').val();
+
+        if (selected_option == "money") {
+            concluir();
+        }
+        if (selected_option == "visa" || selected_option == "mastercard") {
+            $('#closeModalPgt').click();
+            $('#ModalEndereco').modal('show');
+        }
+    }
+
+    function validar() {
+        if (listaIngredientes.getState() == "") {
+            $('#ModalAlerta').modal('show');
+        }
+        else {
+            $('#ModalPgt').modal('show');
+        }
     }
 </script>
