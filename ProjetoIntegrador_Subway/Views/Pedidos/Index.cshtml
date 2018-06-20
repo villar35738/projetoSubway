@@ -1,4 +1,4 @@
-﻿@model Tuple<IEnumerable<ProjetoIntegrador_Subway.Models.Pedido>, IEnumerable<ProjetoIntegrador_Subway.Models.Produto>>
+﻿@model Tuple<ProjetoIntegrador_Subway.Models.Pedido, IEnumerable<ProjetoIntegrador_Subway.Models.Produto>>
 @using Microsoft.AspNet.Identity
 
 @{
@@ -9,11 +9,10 @@
 
 <div class="row">
     <div class="col-md-6 col-centered">
-        <center><h3>Pedido - Ingredientes</h3></center>
+        <center><h3>Seleção de ingredientes</h3></center>
     </div>
 </div>
 <hr />
-@Html.EditorFor(model => model.Item1.FirstOrDefault().ID, new { htmlAttributes = new { @class = "form-control", @id = "ID", @disabled = "disabled", @style = "width: 8%; display: none" } })
 <div class="row">
     <div class="col-md-5">
         <table class="table table-hover table-bordered" style="background-color: white !important; width: 846px;" id="myTable">
@@ -56,7 +55,7 @@
                         </td>
                         <td style="width: 112px;">
                             <input type="number" style="float: left; width: 60px" id="qtdItem" onclick="changeItemQtd(this.value)" class="form-control" max="@item.limitePorLanche" min="0" />
-                            <input type="button" class="btn btn-default" onclick="addToList(@item.ID, '@item.nomeProduto', @item.limitePorLanche, @item.qtdEstoque,'@item.valorProduto')" value="+" />
+                            <input type="button" class="btn btn-default" onclick="addToList(@item.ID, '@item.nomeProduto', @item.limitePorLanche, @item.qtdEstoque,'@item.valorProduto', @item.qtdEstoque)" value="+" />
                         </td>
                     </tr>
                 }
@@ -238,6 +237,22 @@
             </div>
         </div>
     </div>
+
+    <div class="modal fade bd-example-modal-sm" id="ModalAlertaQTD" tabindex="-1" role="dialog" aria-labelledby="mySmallModalLabel" aria-hidden="true">
+        <div class="modal-dialog modal-sm">
+            <div class="modal-content">
+                <div class="modal-header">
+                    <h5 class="modal-title" id="exampleModalLabel">Alerta</h5>
+                    <button type="button" class="close" style="margin-top: -19px" data-dismiss="modal" aria-label="Close">
+                        <span aria-hidden="true">&times;</span>
+                    </button>
+                </div>
+                <div class="modal-body">
+                    Limite de ingrediente excedido ou inválido
+                </div>
+            </div>
+        </div>
+    </div>
     <div class="col-md-5" style="float: right; width: 27%;">
         <div class="panel panel-default">
             <div class="panel-heading">Visualização do pedido</div>
@@ -278,7 +293,6 @@
         var pub = {};// public object - returned at end of module
 
         pub.changeState = function (newstate) {
-            //alert(newstate);
             qtd = newstate;
         };
 
@@ -294,67 +308,51 @@
     }
 
     function addToList(id, nome, limite, estoque, valor) {
+        if (qtdItemF.getState() == 0 || qtdItemF.getState() > limite || qtdItemF.getState().toString() == "NaN") {
+            $('#ModalAlertaQTD').modal("show");
+            return;
+        }
         var precoQtd = parseCurrency(valor) * parseInt(qtdItemF.getState());
         $("#idOlPedido").append("<li>" + nome + " - R$ " + precoQtd + " - Quantidade: " + qtdItemF.getState() + "</li>");
         stateModule.changeState(precoQtd);
         listaIngredientes.changeState(id, parseInt(qtdItemF.getState()));
-        alert(listaIngredientes.getState());
         document.getElementById('totalP').value = "R$ " + stateModule.getState();
     }
 
-    //var listaIngredientes = (function () {
-    //    var ingredientes = [];
-
-    //    var pub = {};// public object - returned at end of module
-
-    //    pub.changeState = function (id, quantidade) {
-    //        ingredientes.push({ idIng: id, quantidadeIng: quantidade })
-    //    };
-
-    //    pub.getState = function () {
-    //        return ingredientes;
-    //    }
-
-    //    return pub; // expose externally
-    //}());
-
     var listaIngredientes = (function () {
-        debugger;
-        var ingredientes = {};
-        var index = 0;
+        var ingredientes = [];
+        var qtdIngredientes = [];
+
         var pub = {};// public object - returned at end of module
 
         pub.changeState = function (id, quantidade) {
-            debugger;
-            ingredientes["stepsDictionary[" + index + "].Key"] = id;
-            ingredientes["stepsDictionary[" + index + "].Value"] = quantidade;
-            index = index + 1;
-            //ingredientes.push({ idIng: id, quantidadeIng: quantidade })
+            ingredientes.push(id)
+            qtdIngredientes.push(quantidade);
         };
 
         pub.getState = function () {
             return ingredientes;
-        }
+        };
+
+        pub.getQtd = function () {
+            return qtdIngredientes;
+        };
 
         return pub; // expose externally
     }());
 
     function concluir() {
         var ingredientes = listaIngredientes.getState();
-        //for (var i = 0, count = ingredientes.length; i < count; i++) {
-        //    alert(ingredientes[i].Key + " q: " + ingredientes[i].Value);
-        //}
-
+        var qtdIngredientes = listaIngredientes.getQtd();
         var total = stateModule.getState();
         var usrName = "@HttpContext.Current.User.Identity.Name";
-        var id = $('#ID').val();
         $.ajax({
             type: "POST",
             url: "/Pedidos/montarLanche",
-            data: { ingredientes: ingredientes, usrName: usrName, total: total, id: id },
+            data: { ingredientes: ingredientes, qtdIngredientes: qtdIngredientes, usrName: usrName, total: total},
             traditional: true,
             success: function (data) {
-                alert("UI");;
+                window.location = "/Home/Index";
             },
             error: function (xhr, err) {
                 alert("readyState: " + xhr.readyState + "\nstatus: " + xhr.status);
@@ -364,16 +362,19 @@
     }
 
     function concluirCartao() {
-        var ingredientes = listaIngredientes.getState();
         var cep = $('#cep').val();
         var numero = $('#numero').val();
+        var ingredientes = listaIngredientes.getState();
+        var qtdIngredientes = listaIngredientes.getQtd();
+        var total = stateModule.getState();
+        var usrName = "@HttpContext.Current.User.Identity.Name";
         $.ajax({
             type: "POST",
             url: "/Pedidos/montarLancheCartao",
-            data: { ingredientes: ingredientes },
+            data: { ingredientes: ingredientes, qtdIngredientes: qtdIngredientes, usrName: usrName, total: total, cep: cep, numero: numero},
             traditional: true,
             success: function (data) {
-                alert("UI");;
+                window.location = "/Home/Index";
             },
             error: function (xhr, err) {
                 alert("readyState: " + xhr.readyState + "\nstatus: " + xhr.status);

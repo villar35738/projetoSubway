@@ -1,0 +1,40 @@
+﻿@model ProjetoIntegrador_Subway.Models.Pedido
+
+@{
+    ViewBag.Title = "Details";
+    Layout = "~/Views/Shared/_Layout.cshtml";
+}
+
+<h2>Details</h2>
+
+<div>
+    <h4>Produto</h4>
+    <hr />
+    <dl class="dl-horizontal">
+        <dt>
+            @Html.DisplayNameFor(model => model.ID)
+        </dt>
+
+        <dd>
+            @Html.DisplayFor(model => model.ID)
+        </dd>
+        @{
+        Dictionary<string, int> lista = (Dictionary<string, int>)ViewBag.IngredientesPedido;
+        foreach (var item in lista)
+        {
+            <dt>
+                @item.Key
+            </dt>
+
+            <dd>
+                @item.Value
+            </dd>
+    }
+        }
+
+    </dl>
+</div>
+<p>
+    @Html.ActionLink("Edit", "Edit", new { id = Model.ID }) |
+    @Html.ActionLink("Back to List", "Index")
+</p>

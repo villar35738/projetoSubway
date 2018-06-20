@@ -324,6 +324,7 @@
     <Content Include="Views\Pedidos\TodosPedidos.cshtml" />
     <Content Include="Views\Pedidos\PedidoFechado.cshtml" />
     <Content Include="Views\Pedidos\PedidoPago.cshtml" />
+    <Content Include="Views\Pedidos\Details.cshtml" />
   </ItemGroup>
   <ItemGroup>
     <Folder Include="App_Data\" />
