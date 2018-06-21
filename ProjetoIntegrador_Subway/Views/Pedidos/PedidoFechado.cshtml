@@ -57,8 +57,15 @@
                     R$ @Html.DisplayFor(modelItem => item.valorTotal)
                 </center>
             </td>
-            <td>@Html.ActionLink("Confirmar pagamento", "confirmarPgt", new { id = item.ID })</td>
+            <td>
+                <center>
+                    @Html.ActionLink("Confirmar pagamento", "confirmarPgt", new { id = item.ID })
+                </center>
+            </td>
         </tr>
     }
 
 </table>
+<p>
+    @Html.ActionLink("Voltar", "Index", "Home", null, new { @class = "btn btn-default" })
+</p>

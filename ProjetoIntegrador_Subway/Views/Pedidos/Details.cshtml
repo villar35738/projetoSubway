@@ -4,92 +4,109 @@
     ViewBag.Title = "Details";
     Layout = "~/Views/Shared/_Layout.cshtml";
 }
-<center><h2 style="margin-top: 60px">Detalhes do pedido número: @Html.DisplayFor(model => model.ID)</h2></center>
-<div class="progress" style="width: 100%; height: 10px">
-    <div class="progress-bar" role="progressbar" aria-valuenow="100" aria-valuemin="0" aria-valuemax="100" style="width: 100%; height: 10px; background-color: #009845 !important">
-        <span class="sr-only"></span>
+<form id="formID">
+    <center><h2 style="margin-top: 60px">Detalhes do pedido número: @Html.DisplayFor(model => model.ID)</h2></center>
+    <div class="progress" style="width: 100%; height: 10px">
+        <div class="progress-bar" role="progressbar" aria-valuenow="100" aria-valuemin="0" aria-valuemax="100" style="width: 100%; height: 10px; background-color: #009845 !important">
+            <span class="sr-only"></span>
+        </div>
     </div>
-</div>
 
-<div>
-    <hr />
-    <table class="table table-hover table-bordered" style="background-color: white !important">
-        <tr>
-            <th>
-                <center>
-                    Nome do produto
-                </center>
-            </th>
-            <th>
-                <center>
-                    Quantidade
-                </center>
-            </th>
-        </tr>
-        @{
-            Dictionary<string, int> lista = (Dictionary<string, int>)ViewBag.IngredientesPedido;
-            foreach (var item in lista)
-            {
-                <tr>
-                    <td>
-                        @item.Key
-                    </td>
-                    <td>
-                        <center>
-                            @item.Value
-                        </center>
-                    </td>
+    <div>
+        <hr />
+        <table class="table table-hover table-bordered" style="background-color: white !important">
+            <tr>
+                <th>
+                    <center>
+                        Nome do produto
+                    </center>
+                </th>
+                <th>
+                    <center>
+                        Quantidade
+                    </center>
+                </th>
+            </tr>
+            @{
+                Dictionary<string, int> lista = (Dictionary<string, int>)ViewBag.IngredientesPedido;
+                foreach (var item in lista)
+                {
+                    <tr>
+                        <td>
+                            @item.Key
+                        </td>
+                        <td>
+                            <center>
+                                @item.Value
+                            </center>
+                        </td>
 
-                </tr>
+                    </tr>
+                }
             }
-        }
-    </table>
-    @if (Model.CEP != null)
-    {
-        <row>
-            <div class="col-md-4"></div>
-            <div class="col-md-4">
-                <center>
-                    <label for="cep" class="label label-default ">Tipo de pagamento:</label>
-                    <input type="text" id="cep" class="form-control text-center" value="Pagamento via cartão " disabled />
-                </center>
-            </div>
-            <div class="col-md-4"></div>
-        </row>
-        <br /><br /><br /><br />
-        <row>
-            <div class="col-md-2"></div>
-            <div class="col-md-4">
-                <center>
-                    <label for="cep" class="label label-default">CEP:</label>
-                    <input type="text" id="cep" class="form-control text-center" value="@Model.CEP" disabled />
-                </center>
-            </div>
+        </table>
+        @if (Model.CEP != null)
+        {
+            <row>
+                <div class="col-md-4"></div>
+                <div class="col-md-4">
+                    <center>
+                        <label for="cep" class="label label-default ">Tipo de pagamento:</label>
+                        <input type="text" id="cep" class="form-control text-center" value="Pagamento via cartão " disabled />
+                    </center>
+                </div>
+                <div class="col-md-4"></div>
+            </row>
+            <br /><br /><br /><br />
+            <row>
+                <div class="col-md-2"></div>
+                <div class="col-md-4">
+                    <center>
+                        <label for="cep" class="label label-default">CEP:</label>
+                        <input type="text" id="cep" class="form-control text-center" value="@Model.CEP" disabled />
+                    </center>
+                </div>
 
-            <div class="col-md-4">
-                <center>
-                    <label for="numero" class="label label-default">Número:</label>
-                    <input type="text" id="numero" class="form-control text-center" value="@Model.numero" disabled />
-                </center>
-            </div>
-            <div class="col-md-2"></div>
-        </row>
-    }
-    else
-    {
-        <row>
-            <div class="col-md-4"></div>
-            <div class="col-md-4">
-                <center>
-                    <label for="cep" class="label label-default ">Tipo de pagamento:</label>
-                    <input type="text" id="cep" class="form-control text-center" value="Pagamento em dinheiro " disabled />
-                </center>
-            </div>
-            <div class="col-md-4"></div>
-        </row>
-    }
-</div>
+                <div class="col-md-4">
+                    <center>
+                        <label for="numero" class="label label-default">Número:</label>
+                        <input type="text" id="numero" class="form-control text-center" value="@Model.numero" disabled />
+                    </center>
+                </div>
+                <div class="col-md-2"></div>
+            </row>
+        }
+        else
+        {
+            <row>
+                <div class="col-md-4"></div>
+                <div class="col-md-4">
+                    <center>
+                        <label for="cep" class="label label-default ">Tipo de pagamento:</label>
+                        <input type="text" id="cep" class="form-control text-center" value="Pagamento em dinheiro " disabled />
+                    </center>
+                </div>
+                <div class="col-md-4"></div>
+            </row>
+        }
+    </div>
+</form>
+
 <br /><br /><br />
 <p>
     @Html.ActionLink("Voltar", "TodosPedidos", null, new { @class="btn btn-default" })
+    <input type="button" class="btn btn-default" value="Imprimir" onclick="printForm()" style="float: right" />
 </p>
+
+<script type="text/javascript">
+    function printForm() {
+        var printContents = document.getElementById("formID").innerHTML;
+        var originalContents = document.body.innerHTML;
+
+        document.body.innerHTML = printContents;
+
+        window.print();
+
+        document.body.innerHTML = originalContents;
+    }
+</script>

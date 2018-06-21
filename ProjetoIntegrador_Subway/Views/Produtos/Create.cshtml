@@ -26,13 +26,13 @@
         </div>
         <div class="col-md-3 col-centered">
             <div class="form-group">
-                @Html.EditorFor(model => model.Item1.nomeProduto, new { htmlAttributes = new { @class = "form-control mBottom", @placeholder = "Nome do produto" } })
+                @Html.EditorFor(model => model.Item1.nomeProduto, new { htmlAttributes = new { @class = "form-control mBottom", @placeholder = "Nome do produto", @required = "required" } })
                 @Html.ValidationMessageFor(model => model.Item1.nomeProduto, "", new { @class = "text-danger" })
 
-                @Html.EditorFor(model => model.Item1.valorProduto, new { htmlAttributes = new { @class = "form-control mBottom", @placeholder = "Valor do produto" } })
+                @Html.EditorFor(model => model.Item1.valorProduto, new { htmlAttributes = new { @class = "form-control mBottom", @placeholder = "Valor do produto", @required = "required", @id = "valorID" } })
                 @Html.ValidationMessageFor(model => model.Item1.valorProduto, "", new { @class = "text-danger" })
 
-                @Html.EditorFor(model => model.Item1.limitePorLanche, new { htmlAttributes = new { @class = "form-control mBottom", @placeholder = "Limite por lanche" } })
+                @Html.EditorFor(model => model.Item1.limitePorLanche, new { htmlAttributes = new { @class = "form-control mBottom", @placeholder = "Limite por lanche", @required = "required" } })
                 @Html.ValidationMessageFor(model => model.Item1.limitePorLanche, "", new { @class = "text-danger" })
 
                 <select class="form-control" name="tipoProduto" id="tipoProduto">
@@ -46,12 +46,11 @@
 
                 <center>
                     <div class="form-group" style="margin-top: 10px">
-                        <input type="submit" value="Create" class="btn btn-default" />
+                        <input type="button" id="btnC" value="Cadastrar" onclick="myfunction()" class="btn btn-default" />
                     </div>
                 </center>
 
             </div>
-            @*<img src="~/Imagens/Subway.png" style="width: 50%; margin-top: 20px; margin-right: 10px; margin-left: 30%" />*@
         </div>
 
         <hr />
@@ -87,36 +86,75 @@
                         @Html.DisplayNameFor(model => model.Item1.qtdEstoque)
                     </center>
                 </th>
+                <td></td>
             </tr>
             @foreach (var item in Model.Item2)
-            {
-                <tr>
-                    <td>
-                        <center>
-                            @item.ID
-                        </center>
-                    </td>
-                    <td>
-                        @item.nomeProduto
-                    </td>
-                    <td>
-                        <center>
-                            R$ @item.valorProduto
-                        </center>
-                    </td>
-                    <td>
-                        <center>@item.limitePorLanche unidades</center>
-                    </td>
-                    <td>
-                        @item.tipoProduto
-                    </td>
-                    <td style="width: 15%">
-                        <center>
-                            @item.qtdEstoque unidades
-                        </center>
-                    </td>
-                </tr>
-        }
+        {
+            <tr>
+                <td>
+                    <center>
+                        @item.ID
+                    </center>
+                </td>
+                <td>
+                    @item.nomeProduto
+                </td>
+                <td>
+                    <center>
+                        R$ @item.valorProduto
+                    </center>
+                </td>
+                <td>
+                    <center>@item.limitePorLanche unidades</center>
+                </td>
+                <td>
+                    @item.tipoProduto
+                </td>
+                <td style="width: 15%">
+                    <center>
+                        @item.qtdEstoque unidades
+                    </center>
+                </td>
+                <td>
+                    <center>
+                        @Html.ActionLink("Editar", "Edit", new { id = item.ID })
+                    </center>
+                </td>
+            </tr>
+    }
         </table>
+        <p>
+            @Html.ActionLink("Voltar", "Index", "Home", null, new { @class = "btn btn-default" })
+        </p>
     </div>
 }
+
+
+<div class="modal fade bd-example-modal-sm" id="ModalAlerta" tabindex="-1" role="dialog" aria-labelledby="mySmallModalLabel" aria-hidden="true">
+    <div class="modal-dialog modal-sm">
+        <div class="modal-content">
+            <div class="modal-header">
+                <h5 class="modal-title" id="exampleModalLabel">Alerta</h5>
+                <button type="button" class="close" style="margin-top: -19px" data-dismiss="modal" aria-label="Close">
+                    <span aria-hidden="true">&times;</span>
+                </button>
+            </div>
+            <div class="modal-body">
+                Somente é valido tipos númericos! (0,0)
+            </div>
+        </div>
+    </div>
+</div>
+<script type="text/javascript">
+    function myfunction() {
+        var valor = $("#valorID").val();
+
+        if (valor.indexOf(".") >= 0 || valor.match(/[a-z]/i)) {
+            $('#ModalAlerta').modal("show");
+            return false;
+        }
+        else {
+            document.getElementById('btnC').type = 'submit';
+        }
+    }
+</script>

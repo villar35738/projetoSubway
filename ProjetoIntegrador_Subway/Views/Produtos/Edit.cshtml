@@ -4,75 +4,110 @@
     ViewBag.Title = "Edit";
     Layout = "~/Views/Shared/_Layout.cshtml";
 }
-
-<div class="row">
-    <div class="col-md-6 col-centered">
-        <center><h3>Adicionar @Model.nomeProduto no estoque</h3></center>
-    </div>
-</div>
+@{
+    if (User.IsInRole("Gerente"))
+    {
+        <div class="row">
+            <div class="col-md-6 col-centered">
+                <center><h3>Editar @Model.nomeProduto</h3></center>
+            </div>
+        </div>
+    }
+    else
+    {
+        <div class="row">
+            <div class="col-md-6 col-centered">
+                <center><h3>Adicionar @Model.nomeProduto no estoque</h3></center>
+            </div>
+        </div>
+    }
+}
 
 @using (Html.BeginForm())
 {
     @Html.AntiForgeryToken()
 
-<div class="form-horizontal">
-    <hr />
-    @Html.ValidationSummary(true, "", new { @class = "text-danger" })
-    @Html.HiddenFor(model => model.ID)
+    <div class="form-horizontal">
+        <hr />
+        @Html.ValidationSummary(true, "", new { @class = "text-danger" })
+        @Html.HiddenFor(model => model.ID)
 
-    <div class="form-group" style="display: none">
-        @Html.LabelFor(model => model.nomeProduto, htmlAttributes: new { @class = "control-label col-md-2" })
-        <div class="col-md-10">
-            @Html.EditorFor(model => model.nomeProduto, new { htmlAttributes = new { @class = "form-control" } })
-            @Html.ValidationMessageFor(model => model.nomeProduto, "", new { @class = "text-danger" })
+        <div class="form-group" style="display: none">
+            @Html.LabelFor(model => model.nomeProduto, htmlAttributes: new { @class = "control-label col-md-2" })
+            <div class="col-md-10">
+                @Html.EditorFor(model => model.nomeProduto, new { htmlAttributes = new { @class = "form-control" } })
+                @Html.ValidationMessageFor(model => model.nomeProduto, "", new { @class = "text-danger" })
+            </div>
         </div>
-    </div>
-    <div class="form-group">
-        <div class="col-md-3 col-centered">
-            @Html.LabelFor(model => model.nomeProduto, htmlAttributes: new { @class = "control-label col-md-2", @style = "width: 100%; margin-left: -59px;" })
-            <input type="text" class="form-control" name="name" value="@Model.nomeProduto" disabled />
+        <div class="form-group">
+            <div class="col-md-3 col-centered">
+                @Html.LabelFor(model => model.nomeProduto, htmlAttributes: new { @class = "control-label col-md-2", @style = "width: 100%; margin-left: -59px;" })
+                <input type="text" class="form-control" name="name" value="@Model.nomeProduto" disabled />
+            </div>
         </div>
-    </div>
-    <div class="form-group" style="display: none">
-        @Html.LabelFor(model => model.valorProduto, htmlAttributes: new { @class = "control-label col-md-2" })
-        <div class="col-md-10">
-            @Html.EditorFor(model => model.valorProduto, new { htmlAttributes = new { @class = "form-control" } })
-            @Html.ValidationMessageFor(model => model.valorProduto, "", new { @class = "text-danger" })
-        </div>
-    </div>
+        @{
+            if (User.IsInRole("Gerente"))
+            {
+                <div class="form-group">
+                    <div class="col-md-3 col-centered">
+                        @Html.LabelFor(model => model.valorProduto, htmlAttributes: new { @class = "control-label col-md-2", @style = "width: 100%; margin-left: -60px;" })
+                        @Html.EditorFor(model => model.valorProduto, new { htmlAttributes = new { @class = "form-control" } })
+                        @Html.ValidationMessageFor(model => model.valorProduto, "", new { @class = "text-danger" })
+                    </div>
+                </div>
 
-    <div class="form-group" style="display: none">
-        @Html.LabelFor(model => model.limitePorLanche, htmlAttributes: new { @class = "control-label col-md-2" })
-        <div class="col-md-10">
-            @Html.EditorFor(model => model.limitePorLanche, new { htmlAttributes = new { @class = "form-control" } })
-            @Html.ValidationMessageFor(model => model.limitePorLanche, "", new { @class = "text-danger" })
-        </div>
-    </div>
+                <div class="form-group">
+                    <div class="col-md-3 col-centered">
+                        @Html.LabelFor(model => model.limitePorLanche, htmlAttributes: new { @class = "control-label col-md-2", @style = "width: 100%; margin-left: -60px;" })
+                        @Html.EditorFor(model => model.limitePorLanche, new { htmlAttributes = new { @class = "form-control" } })
+                        @Html.ValidationMessageFor(model => model.limitePorLanche, "", new { @class = "text-danger" })
+                    </div>
+                </div>
+            }
+            else
+            {
+                <div class="form-group" style="display: none">
+                    @Html.LabelFor(model => model.valorProduto, htmlAttributes: new { @class = "control-label col-md-2" })
+                    <div class="col-md-10 col-centered">
+                        @Html.EditorFor(model => model.valorProduto, new { htmlAttributes = new { @class = "form-control" } })
+                        @Html.ValidationMessageFor(model => model.valorProduto, "", new { @class = "text-danger" })
+                    </div>
+                </div>
 
-    <div class="form-group" style="display: none">
-        @Html.LabelFor(model => model.tipoProduto, htmlAttributes: new { @class = "control-label col-md-2" })
-        <div class="col-md-10">
-            @Html.EditorFor(model => model.tipoProduto, new { htmlAttributes = new { @class = "form-control" } })
-            @Html.ValidationMessageFor(model => model.tipoProduto, "", new { @class = "text-danger" })
-        </div>
-    </div>
+                <div class="form-group" style="display: none">
+                    @Html.LabelFor(model => model.limitePorLanche, htmlAttributes: new { @class = "control-label col-md-2" })
+                    <div class="col-md-10 col-centered">
+                        @Html.EditorFor(model => model.limitePorLanche, new { htmlAttributes = new { @class = "form-control" } })
+                        @Html.ValidationMessageFor(model => model.limitePorLanche, "", new { @class = "text-danger" })
+                    </div>
+                </div>
+            }
+        }
 
-    <div class="form-group">
-        <div class="col-md-3 col-centered">
-            @Html.LabelFor(model => model.qtdEstoque, htmlAttributes: new { @class = "control-label col-md-2", @style = "width: 100%; margin-left: -38px;" })
-            @Html.EditorFor(model => model.qtdEstoque, new { htmlAttributes = new { @class = "form-control" } })
-            @Html.ValidationMessageFor(model => model.qtdEstoque, "", new { @class = "text-danger" })
+        <div class="form-group" style="display: none">
+            @Html.LabelFor(model => model.tipoProduto, htmlAttributes: new { @class = "control-label col-md-2" })
+            <div class="col-md-10">
+                @Html.EditorFor(model => model.tipoProduto, new { htmlAttributes = new { @class = "form-control" } })
+                @Html.ValidationMessageFor(model => model.tipoProduto, "", new { @class = "text-danger" })
+            </div>
         </div>
-    </div>
 
-    <div class="form-group">
-        <div class="col-md-offset-2 col-md-3 col-centered">
-            <center>
-                <input type="submit" value="Save" class="btn btn-default" />
-            </center>
+        <div class="form-group">
+            <div class="col-md-3 col-centered">
+                @Html.LabelFor(model => model.qtdEstoque, htmlAttributes: new { @class = "control-label col-md-2", @style = "width: 100%; margin-left: -38px;" })
+                @Html.EditorFor(model => model.qtdEstoque, new { htmlAttributes = new { @class = "form-control" } })
+                @Html.ValidationMessageFor(model => model.qtdEstoque, "", new { @class = "text-danger" })
+            </div>
+        </div>
+
+        <div class="form-group">
+            <div class="col-md-offset-2 col-md-3 col-centered">
+                <center>
+                    <input type="submit" value="Save" class="btn btn-default" />
+                </center>
+            </div>
         </div>
     </div>
-</div>
 }
 
 <div>

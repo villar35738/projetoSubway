@@ -70,7 +70,7 @@ namespace ProjetoIntegrador_Subway.Controllers
             pedido.pgtRecebido = "Sim";
             db.Entry(pedido).State = EntityState.Modified;
             db.SaveChanges();
-            return RedirectToAction("Index", "Home"); ;
+            return RedirectToAction("Index", "Home");
         }
 
         //GET

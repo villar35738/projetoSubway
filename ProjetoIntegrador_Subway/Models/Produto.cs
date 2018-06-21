@@ -16,7 +16,7 @@ namespace ProjetoIntegrador_Subway.Models
         [Display(Name = "Nome do produto")]
         public string nomeProduto { get; set; }
 
-        [Required]
+        [Required(ErrorMessage= "Por favor, verifique se você inseriu pelo menos um número, caso utilize valores quebrados insira-os com virgula ( 0,0 )")]
         [Display(Name = "Valor do produto")]
         public decimal valorProduto { get; set; }
 

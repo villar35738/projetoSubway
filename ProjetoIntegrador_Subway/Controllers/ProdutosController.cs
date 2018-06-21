@@ -84,7 +84,12 @@ namespace ProjetoIntegrador_Subway.Controllers
         {
                 db.Entry(produto).State = EntityState.Modified;
                 db.SaveChanges();
-                return RedirectToAction("Index");
+                if (User.IsInRole("Gerente"))
+                {
+                 return RedirectToAction("Create");
+            }
+            return RedirectToAction("Index");
+
         }
 
         // GET: Produtos/Delete/5
